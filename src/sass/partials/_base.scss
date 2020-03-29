@@ -4,10 +4,10 @@ $regular: 400;
 $bold: 600;
 
 // Base Font
-$base-font-family: Consolas, Futura, sans-serif;
+$base-font-family: Wargames, Consolas, Futura, sans-serif;
 $base-font-weight: $regular;
-$base-font-size: rem-calc(14);
-$base-line-height: 1.4;
+$base-font-size: 48;
+$base-line-height: 72;
 
 // Fixed Font
 $fixed-font-family: monospace;
@@ -17,8 +17,16 @@ $fixed-line-height: $base-line-height;
 // Headings
 $header-font-weight: $bold;
 
+@font-face {
+    font-family: 'Wargames';
+    src: url('../../assets/fonts/wargames.woff2') format('woff2'), 
+         url('../../assets/fonts/wargames.woff') format('woff'),
+         url('../../assets/fonts/wargames.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
-    font: $base-font-size $base-font-family;
     background-color: black;
 }
 

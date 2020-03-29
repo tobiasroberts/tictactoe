@@ -5,9 +5,13 @@ import '../../sass/main.scss';
 
 function Square(props) {
   return (
-      <button className="square" onClick={props.onClick}>
+    <button className="square" onClick={props.onClick}>
+      <div className="strikethrough">
+        <div className="strikethrough-reset">
           {props.value}
-      </button>
+        </div>
+      </div>
+    </button>
   );
 }
   
@@ -46,13 +50,19 @@ class Board extends React.Component {
 
 class TicTacToe extends React.Component {
   handleClick(i) {
-    if (this.props.moves[this.props.moves.length - 1].squares.includes(null)) {
-      this.props.addMove({
-        square: i,
-        moves: this.props.moves,
-        stepNumber: this.props.stepNumber,
-        xIsNext: this.props.xIsNext
-      });
+    if ((this.props.moves[this.props.moves.length - 1].squares[i] === null) && ((this.props.moves[this.props.moves.length - 1].squares.includes(null)))) {
+      if (this.props.winner === null) {
+        this.props.addMove({
+          square: i,
+          moves: this.props.moves,
+          stepNumber: this.props.stepNumber,
+          xIsNext: this.props.xIsNext
+        });
+        console.log(this.props);
+      }
+      else {
+        this.props.winner.combination.forEach(element => document.getElementsByClassName('strikethrough')[element].classList.add(this.props.winner.strikethrough));
+      }
     }
   }
 
@@ -68,30 +78,8 @@ class TicTacToe extends React.Component {
       </div>
     );
   }
-
 }
 
-const determineWinner = squares => {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
-
-  
 const mapDispatchToProps = {
   addMove
 };

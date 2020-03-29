@@ -3,34 +3,24 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     min-height: 95vh;
-      
+
     .board {
 
         .row {
 
-            &:after {
-                clear: both;
-                content: '';
-                display: table;
-            }
-        
             .square {
-                background: #000;
+                background: black;
                 border: rem-calc(1) solid green;
                 float: left;
-                font-size: rem-calc(48);
-                font-weight: bold;
+                font-family: Wargames;
+                font-size: rem-calc($base-font-size);
                 color: green;
-                line-height: rem-calc(72);
-                height: rem-calc(72);
-                margin-right: rem-calc(-1);
-                margin-top: rem-calc(-1);
-                padding: 0;
-                text-align: center;
-                width: rem-calc(72);
-
+                line-height: rem-calc($base-line-height);
+                height: rem-calc($base-line-height);
+                width: rem-calc($base-line-height);
+                padding: rem-calc(7) rem-calc(19);
+            
                 &:nth-child(1) {
                     border-left: none;
                 }
@@ -41,6 +31,60 @@
 
                 &:focus {
                     outline: none;
+                }
+
+                .strikethrough {
+
+                    &.diagional-line-right {
+                        border-left: rem-calc(3) solid green;
+                        height: rem-calc(100);
+                        width: rem-calc($base-line-height);
+                        transform: rotate(45deg);
+                        transform-origin: 45% 58%;
+                
+                        .strikethrough-reset {
+                            height: rem-calc($base-line-height);
+                            transform: rotate(-45deg);
+                            transform-origin: 50% 110%;
+                        }
+                    }
+                
+                    &.diagional-line-left {
+                        border-right: rem-calc(3) solid green;
+                        height: rem-calc(100);
+                        width: rem-calc($base-line-height);
+                        transform: rotate(-45deg);
+                        transform-origin: 24% 108%;
+                
+                        .strikethrough-reset {
+                            transform: rotate(45deg);
+                            transform-origin: 40% 120%;
+                        }
+                    }
+                
+                    &.vertical-line {
+                        border-left: rem-calc(3) solid green;
+                        line-height: rem-calc($base-line-height);
+                        height: rem-calc($base-line-height);
+                        width: rem-calc($base-line-height);
+                        transform: translate(20%,-10%);
+                
+                        .strikethrough-reset {
+                            transform: translate(-50%,10%);
+                        }
+                    }
+                
+                    &.horizontal-line {
+                        border-top: rem-calc(3) solid green;
+                        height: rem-calc($base-line-height);
+                        width: rem-calc($base-line-height);
+                        margin-left: rem-calc(-6);
+                        transform: translate(-18%,35%);
+                
+                        .strikethrough-reset {
+                            transform: translate(0%,-41%);
+                        }
+                    }
                 }
             }
 
