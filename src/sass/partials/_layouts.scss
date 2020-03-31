@@ -33,57 +33,54 @@
                     outline: none;
                 }
 
-                .strikethrough {
-
-                    &.diagional-line-right {
-                        border-left: rem-calc(3) solid green;
-                        height: rem-calc(100);
-                        width: rem-calc($base-line-height);
-                        transform: rotate(45deg);
-                        transform-origin: 45% 58%;
-                
-                        .strikethrough-reset {
-                            height: rem-calc($base-line-height);
-                            transform: rotate(-45deg);
-                            transform-origin: 50% 110%;
-                        }
-                    }
-                
-                    &.diagional-line-left {
-                        border-right: rem-calc(3) solid green;
-                        height: rem-calc(100);
-                        width: rem-calc($base-line-height);
+                .diagional-right {
+                    border-left: rem-calc(3) solid green;
+                    height: rem-calc(100);
+                    width: rem-calc($base-line-height);
+                    transform: rotate(45deg);
+                    transform-origin: 45% 58%;
+            
+                    .reset {
+                        height: rem-calc($base-line-height);
                         transform: rotate(-45deg);
-                        transform-origin: 24% 108%;
-                
-                        .strikethrough-reset {
-                            transform: rotate(45deg);
-                            transform-origin: 40% 120%;
-                        }
+                        transform-origin: 58% 117%;
                     }
-                
-                    &.vertical-line {
-                        border-left: rem-calc(3) solid green;
-                        line-height: rem-calc($base-line-height);
-                        height: rem-calc($base-line-height);
-                        width: rem-calc($base-line-height);
-                        transform: translate(20%,-10%);
-                
-                        .strikethrough-reset {
-                            transform: translate(-50%,10%);
-                        }
+                }
+            
+                .diagional-left {
+                    border-right: rem-calc(3) solid green;
+                    height: rem-calc(100);
+                    width: rem-calc($base-line-height);
+                    transform: rotate(-45deg);
+                    transform-origin: 24% 108%;
+            
+                    .reset {
+                        transform: rotate(45deg);
+                        transform-origin: 38% 119%;
                     }
-                
-                    &.horizontal-line {
-                        border-top: rem-calc(3) solid green;
-                        height: rem-calc($base-line-height);
-                        width: rem-calc($base-line-height);
-                        margin-left: rem-calc(-6);
-                        transform: translate(-18%,35%);
-                
-                        .strikethrough-reset {
-                            transform: translate(0%,-41%);
-                        }
+                }
+            
+                .vertical {
+                    border-left: rem-calc(3) solid green;
+                    line-height: rem-calc($base-line-height);
+                    height: rem-calc($base-line-height);
+                    width: rem-calc($base-line-height);
+                    transform: translate(20%,-10%);
+            
+                    .reset {
+                        transform: translate(-50%,10%);
+                    }
+                }
+            
+                .horizontal {
+                    border-top: rem-calc(3) solid green;
+                    height: rem-calc($base-line-height);
+                    width: rem-calc($base-line-height);
+                    margin-left: rem-calc(-6);
+                    transform: translate(-18%,35%);
+            
+                    .reset {
+                        transform: translate(0%,-41%);
                     }
                 }
             }

@@ -6,8 +6,8 @@ import '../../sass/main.scss';
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
-      <div className="strikethrough">
-        <div className="strikethrough-reset">
+      <div className={props.strikeout}>
+        <div className="reset">
           {props.value}
         </div>
       </div>
@@ -21,6 +21,7 @@ class Board extends React.Component {
       <Square
           value={this.props.squares[i]}
           onClick={() => this.props.onClick(i)}
+          strikeout={this.props.strikethrough && this.props.strikethrough.combination.includes(i) ? this.props.strikethrough.type : ''}
       />
     );
   }
@@ -50,19 +51,13 @@ class Board extends React.Component {
 
 class TicTacToe extends React.Component {
   handleClick(i) {
-    if ((this.props.moves[this.props.moves.length - 1].squares[i] === null) && ((this.props.moves[this.props.moves.length - 1].squares.includes(null)))) {
-      if (this.props.winner === null) {
-        this.props.addMove({
-          square: i,
-          moves: this.props.moves,
-          stepNumber: this.props.stepNumber,
-          xIsNext: this.props.xIsNext
-        });
-        console.log(this.props);
-      }
-      else {
-        this.props.winner.combination.forEach(element => document.getElementsByClassName('strikethrough')[element].classList.add(this.props.winner.strikethrough));
-      }
+    if ((this.props.moves[this.props.moves.length - 1].squares[i] === null) && ((this.props.moves[this.props.moves.length - 1].squares.includes(null)) && (this.props.strikethrough === null))) {
+      this.props.addMove({
+        square: i,
+        moves: this.props.moves,
+        stepNumber: this.props.stepNumber,
+        xIsNext: this.props.xIsNext
+      });
     }
   }
 
@@ -73,6 +68,7 @@ class TicTacToe extends React.Component {
           <Board
               squares={this.props.moves[this.props.stepNumber].squares}
               onClick={(i) => this.handleClick(i)}
+              strikethrough={this.props.strikethrough}
           />
         </div>
       </div>

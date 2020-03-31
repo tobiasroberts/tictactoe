@@ -6,25 +6,33 @@ const initialState = {
     }],
     stepNumber: 0,
     xIsNext: true,
-    winner: null
+    strikethrough: null
 };
 
-const winningCombinations = [
-    {combination: [0, 1, 2], strikethrough: 'horizontal-line'},
-    {combination: [3, 4, 5], strikethrough: 'horizontal-line'},
-    {combination: [6, 7, 8], strikethrough: 'horizontal-line'},
-    {combination: [0, 3, 6], strikethrough: 'vertical-line'},
-    {combination: [1, 4, 7], strikethrough: 'vertical-line'},
-    {combination: [2, 5, 8], strikethrough: 'vertical-line'},
-    {combination: [0, 4, 8], strikethrough: 'diagional-line-left'},
-    {combination: [2, 4, 6], strikethrough: 'diagional-line-right'}
+const strikethroughs = [
+    {combination: [0, 1, 2], type: 'horizontal'},
+    {combination: [3, 4, 5], type: 'horizontal'},
+    {combination: [6, 7, 8], type: 'horizontal'},
+    {combination: [0, 3, 6], type: 'vertical'},
+    {combination: [1, 4, 7], type: 'vertical'},
+    {combination: [2, 5, 8], type: 'vertical'},
+    {combination: [0, 4, 8], type: 'diagional-left'},
+    {combination: [2, 4, 6], type: 'diagional-right'}
 ];
   
+const strikeout = squares => {
+    for (let i = 0; i < strikethroughs.length; i++) {
+        if (strikethroughs[i].combination.map(j => squares[j]).every((thing, k, squares) => thing && thing === squares[0])) {
+            return strikethroughs[i];
+        }
+    }
+    return null;
+}
+
 function rootReducer(state = initialState, payload) {
     if (payload.type === ADD_MOVE) {
         const moves = payload.move.moves.slice(0, payload.move.stepNumber + 1);
-        const current = moves[moves.length - 1];
-        const squares = current.squares.slice();
+        const squares = moves[moves.length - 1].squares.slice();
         squares[payload.move.square] = payload.move.xIsNext ? 'X' : 'O';
         state = {
             moves: moves.concat([{
@@ -34,20 +42,10 @@ function rootReducer(state = initialState, payload) {
             }]),
             stepNumber: payload.move.moves.length,
             xIsNext: !payload.move.xIsNext,
-            winner: determineWinner(squares)
+            strikethrough: strikeout(squares)
         };
     }
     return state;
 }
-
-const determineWinner = squares => {
-    for (let i = 0; i < winningCombinations.length; i++) {
-      const [a, b, c] = winningCombinations[i].combination;
-      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return winningCombinations[i];
-      }
-    }
-    return null;
-  }
   
 export default rootReducer;
