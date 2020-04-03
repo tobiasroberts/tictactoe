@@ -1,4 +1,4 @@
-import { ADD_MOVE } from "../constants/action-types";
+import { ADD_MOVE, RESET } from "../constants/action-types";
 
 const initialState = {
     moves: [{
@@ -6,44 +6,47 @@ const initialState = {
     }],
     stepNumber: 0,
     xIsNext: true,
-    strikethrough: null
+    result: null
 };
 
-const strikethroughs = [
-    {combination: [0, 1, 2], type: 'horizontal'},
-    {combination: [3, 4, 5], type: 'horizontal'},
-    {combination: [6, 7, 8], type: 'horizontal'},
-    {combination: [0, 3, 6], type: 'vertical'},
-    {combination: [1, 4, 7], type: 'vertical'},
-    {combination: [2, 5, 8], type: 'vertical'},
-    {combination: [0, 4, 8], type: 'diagional-left'},
-    {combination: [2, 4, 6], type: 'diagional-right'}
+const permutations = [
+    {squares: [], strikeout: ''},
+    {squares: [[0, 1, 2],[3, 4, 5],[6, 7, 8]], strikeout: 'horizontal'},
+    {squares: [[0, 3, 6],[1, 4, 7],[2, 5, 8]], strikeout: 'vertical'},
+    {squares: [[0, 4, 8],[2, 4, 6]], strikeout: 'diagional'},
 ];
-  
-const strikeout = squares => {
-    for (let i = 0; i < strikethroughs.length; i++) {
-        if (strikethroughs[i].combination.map(j => squares[j]).every((thing, k, squares) => thing && thing === squares[0])) {
-            return strikethroughs[i];
+
+const checkPermutations = squares => {
+    for (let i = 1; i < permutations.length; i++) {
+        for (let j = 0; j < permutations[i].squares.length; j++) {
+            if (permutations[i].squares[j].map(k => squares[k]).every((thing, l, squares) => thing && thing === squares[0])) {
+                return {squares: permutations[i].squares[j], strikeout: permutations[i].strikeout  + ((i === 3) ? ((j === 0) ? '-left' : '-right') : '') };
+            }
         }
     }
-    return null;
+    return squares.includes(null) ? null : permutations[0];
 }
 
 function rootReducer(state = initialState, payload) {
-    if (payload.type === ADD_MOVE) {
-        const moves = payload.move.moves.slice(0, payload.move.stepNumber + 1);
-        const squares = moves[moves.length - 1].squares.slice();
-        squares[payload.move.square] = payload.move.xIsNext ? 'X' : 'O';
-        state = {
-            moves: moves.concat([{
-                squares: squares,
-                row: parseInt(payload.move.square/3) + 1,
-                column: payload.move.square%3 + 1
-            }]),
-            stepNumber: payload.move.moves.length,
-            xIsNext: !payload.move.xIsNext,
-            strikethrough: strikeout(squares)
-        };
+    switch (payload.type) {
+        case ADD_MOVE:
+            const moves = payload.move.moves.slice(0, payload.move.stepNumber + 1);
+            const squares = moves[moves.length - 1].squares.slice();
+            squares[payload.move.square] = payload.move.xIsNext ? 'X' : 'O';
+            state = {
+                moves: moves.concat([{
+                    squares: squares,
+                    row: parseInt(payload.move.square/3) + 1,
+                    column: payload.move.square%3 + 1
+                }]),
+                stepNumber: payload.move.moves.length,
+                xIsNext: !payload.move.xIsNext,
+                result: checkPermutations(squares)
+            };
+            break;
+        case RESET:
+        default:
+            state = initialState;
     }
     return state;
 }

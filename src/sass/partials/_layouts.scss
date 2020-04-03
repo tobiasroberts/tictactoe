@@ -99,7 +99,42 @@
         }
     }
 
-    .game-info {
-        margin-left: rem-calc(20);
-    }  
+    .result {
+        font-family: Wargames;
+        font-size: rem-calc(48);
+        color: green;
+        height: rem-calc(48);
+        padding: rem-calc(20) 0 0;
+    }
+
+    .controls {
+        transform: translateY(200%);
+
+        .previous::after {
+            line-height: rem-calc(72);
+            font-size: rem-calc(72);
+            color: green;
+            font-weight: 200;
+            content: '\2039';
+        }
+
+        .reset::after {
+            line-height: rem-calc(72);
+            font-size: rem-calc(72);
+            color: green;
+            font-weight: 200;
+            content: '\21bb';
+            padding: 0 rem-calc(50);
+        }
+
+        .next::after {
+            line-height: rem-calc(72);
+            font-size: rem-calc(72);
+            color: green;
+            font-weight: 200;
+            content: '\203a';
+        }
+
+    }
+
 }
