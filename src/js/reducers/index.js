@@ -1,10 +1,7 @@
-import { ADD_MOVE, RESET } from "../constants/action-types";
+import { ADD } from "../constants/action-types";
 
 const initialState = {
-    moves: [{
-        squares: Array(9).fill(null)
-    }],
-    stepNumber: 0,
+    squares: Array(9).fill(null),
     xIsNext: true,
     result: null
 };
@@ -29,22 +26,15 @@ const checkPermutations = squares => {
 
 function rootReducer(state = initialState, payload) {
     switch (payload.type) {
-        case ADD_MOVE:
-            const moves = payload.move.moves.slice(0, payload.move.stepNumber + 1);
-            const squares = moves[moves.length - 1].squares.slice();
+        case ADD:
+            const squares = [...payload.move.squares];
             squares[payload.move.square] = payload.move.xIsNext ? 'X' : 'O';
             state = {
-                moves: moves.concat([{
-                    squares: squares,
-                    row: parseInt(payload.move.square/3) + 1,
-                    column: payload.move.square%3 + 1
-                }]),
-                stepNumber: payload.move.moves.length,
+                squares: squares,
                 xIsNext: !payload.move.xIsNext,
                 result: checkPermutations(squares)
             };
             break;
-        case RESET:
         default:
             state = initialState;
     }

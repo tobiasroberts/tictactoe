@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addMove, reset } from '../actions/';
+import { add } from '../actions/';
+import Controls from '../containers/controls';
 import '../../sass/main.scss';
 
 function Square(props) {
@@ -51,44 +52,29 @@ class Board extends React.Component {
 
 class TicTacToe extends React.Component {
   handleClick(i) {
-    if ((this.props.moves[this.props.moves.length - 1].squares[i] === null) && ((this.props.moves[this.props.moves.length - 1].squares.includes(null)) && (this.props.result === null))) {
-      this.props.addMove({
+    if ((this.props.present.squares[i] === null) && ((this.props.present.squares.includes(null)) && (this.props.present.result === null))) {
+      this.props.add({
         square: i,
-        moves: this.props.moves,
-        stepNumber: this.props.stepNumber,
-        xIsNext: this.props.xIsNext
+        squares: this.props.present.squares,
+        xIsNext: this.props.present.xIsNext
       });
     }
   }
   
-  handleControls(control) {
-    switch (control){
-      case 'reset':
-        this.props.reset();
-        break;
-      default:
-        console.log('Not yet implemented');
-    }
-  }
-
   render() {
     return (
       <div className="game">
         <div className="board">
           <Board
-              squares={this.props.moves[this.props.stepNumber].squares}
+              squares={this.props.present.squares}
               onClick={(i) => this.handleClick(i)}
-              result={this.props.result}
+              result={this.props.present.result}
           />
         </div>
         <div className="result">
-          <span>{this.props.result && getResult`${this.props.result.strikeout}${this.props.xIsNext}`}</span>
+          <span>{this.props.present.result && getResult`${this.props.present.result.strikeout}${this.props.present.xIsNext}`}</span>
         </div>
-        <div className="controls">
-          <span className="previous" onClick={() => this.handleControls('previous')}></span>
-          <span className="reset" onClick={() => this.handleControls('reset')}></span>
-          <span className="next" onClick={() => this.handleControls('next')}></span>
-        </div>
+        <Controls />
       </div>
     );
   }
@@ -97,8 +83,7 @@ class TicTacToe extends React.Component {
 const getResult = (literals, ...expressions) => `${(expressions[0]) ? 'Winner: ' + ((expressions[1]) ? 'O' : 'X') : 'Draw'}`;
 
 const mapDispatchToProps = {
-  addMove,
-  reset
+  add
 };
   
 export default connect(state => state, mapDispatchToProps)(TicTacToe);
