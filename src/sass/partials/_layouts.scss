@@ -106,37 +106,39 @@
         height: rem-calc(48);
         padding: rem-calc(20) 0 0;
     }
-
-    .controls {
-        transform: translateY(200%);
-    
-        .undo, .reset, .redo {
-            background: black;
-            line-height: rem-calc(72);
-            font-size: rem-calc(72);
-            color: green;
-            font-weight: 200;
-            border: none;
-            outline: none;
-
-            &:disabled {
-                color: grey;
-                cursor: not-allowed;
-            }
-        }
-
-        .undo::after {
-            content: '\2039';
-        }
-    
-        .reset::after {
-            content: '\21bb';
-            padding: 0 rem-calc(50);
-        }
-    
-        .redo::after {
-            content: '\203a';
-        }
-    }  
 }
+
+.controls {
+    display: flex;
+    justify-content: center;
+    transform: translateY(-400%);
+
+    .undo, .reset, .redo {
+        background: black;
+        line-height: rem-calc(72);
+        font-size: rem-calc(72);
+        color: green;
+        font-weight: 200;
+        border: none;
+        outline: none;
+
+        &:disabled {
+            color: grey;
+            cursor: not-allowed;
+        }
+    }
+
+    .undo::after {
+        content: '\2039';
+    }
+
+    .reset::after {
+        content: '\21bb';
+        padding: 0 rem-calc(50);
+    }
+
+    .redo::after {
+        content: '\203a';
+    }
+}  
 

@@ -8,7 +8,7 @@ const Controls = ({allowUndo, allowReset, allowRedo, undo, reset, redo}) => (
     <button className="reset" onClick={reset} disabled={!allowReset}></button>
     <button className="redo" onClick={redo} disabled={!allowRedo}></button>
   </div>
-)
+);
 
 const mapStateToProps = state => {
   return {
@@ -20,8 +20,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    reset: () => dispatch(ActionCreators.jumpToPast(0)) && dispatch(ActionCreators.clearHistory()),
     undo: () => dispatch(ActionCreators.undo()),
+    reset: () => dispatch(ActionCreators.jumpToPast(0)) && dispatch(ActionCreators.clearHistory()),
     redo: () => dispatch(ActionCreators.redo())
   }
 }

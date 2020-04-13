@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { add } from '../actions/';
-import Controls from '../containers/controls';
+import { move } from '../actions/';
 import '../../sass/main.scss';
 
-function Square(props) {
-  return (
+const getResult = (literals, ...expressions) => `${(expressions[0]) ? 'Winner: ' + ((expressions[1]) ? 'O' : 'X') : 'Draw'}`;
+  
+const Square = props => (
     <button className="square" onClick={props.onClick}>
       <div className={props.strikeout}>
         <div className="reset">
@@ -13,8 +13,7 @@ function Square(props) {
         </div>
       </div>
     </button>
-  );
-}
+);
   
 class Board extends React.Component {
   renderSquare(i) {
@@ -53,7 +52,7 @@ class Board extends React.Component {
 class TicTacToe extends React.Component {
   handleClick(i) {
     if ((this.props.present.squares[i] === null) && ((this.props.present.squares.includes(null)) && (this.props.present.result === null))) {
-      this.props.add({
+      this.props.move({
         square: i,
         squares: this.props.present.squares,
         xIsNext: this.props.present.xIsNext
@@ -74,16 +73,9 @@ class TicTacToe extends React.Component {
         <div className="result">
           <span>{this.props.present.result && getResult`${this.props.present.result.strikeout}${this.props.present.xIsNext}`}</span>
         </div>
-        <Controls />
       </div>
     );
   }
 }
 
-const getResult = (literals, ...expressions) => `${(expressions[0]) ? 'Winner: ' + ((expressions[1]) ? 'O' : 'X') : 'Draw'}`;
-
-const mapDispatchToProps = {
-  add
-};
-  
-export default connect(state => state, mapDispatchToProps)(TicTacToe);
+export default connect(state => state, { move })(TicTacToe);

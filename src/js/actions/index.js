@@ -1,5 +1,5 @@
 import { ADD } from "../constants/action-types";
 
-export function add(move) {
+export function move(move) {
   return { type: ADD, move };
 }
