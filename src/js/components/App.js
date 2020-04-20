@@ -4,8 +4,10 @@ import Controls from './Controls';
 
 const App = () => (
   <div>
-    <TicTacToe />
-    <Controls />
+    <React.StrictMode>
+      <TicTacToe />
+      <Controls />
+    </React.StrictMode>
   </div>
 );
 

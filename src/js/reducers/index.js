@@ -1,4 +1,4 @@
-import { ADD } from "../constants/action-types";
+import { MOVE } from "../constants/action-types";
 
 const initialState = {
     squares: Array(9).fill(null),
@@ -26,7 +26,7 @@ const checkPermutations = squares => {
 
 function rootReducer(state = initialState, payload) {
     switch (payload.type) {
-        case ADD:
+        case MOVE:
             const squares = [...payload.move.squares];
             squares[payload.move.square] = payload.move.xIsNext ? 'X' : 'O';
             state = {
